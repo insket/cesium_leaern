@@ -7,20 +7,20 @@ import * as Cesium from "cesium";
 import { onMounted } from "vue";
 
 onMounted(() => {
-  const viewer = new Cesium.Viewer("cesiumContainer", {
-    geocoder: false, // search 按钮
-    homeButton: false, // home 按钮
-    sceneModePicker:false, // 视图按钮
-    baseLayerPicker:false,  // 地图模式
-    navigationHelpButton:false,  // ？ 按钮
-    animation:false, // 左下角动画 按钮
-    // creditContainer:"credit",
-    timeline:false, // time 时间线
-    fullscreenButton:false, //全屏
+  const viewer = new Cesium.Viewer("cesiumContainer");
+  var redBox = viewer.entities.add({
+    name: "Red box with black outline",
+    position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 300000.0),
+    box: {
+      dimensions: new Cesium.Cartesian3(200000.0, 300000.0, 500000.0), // x  y  z
+      material: Cesium.Color.RED.withAlpha(0.2),
+      outline: true,
+      outlineColor: Cesium.Color.BLACK,
+    },
   });
-  viewer.scene.debugShowFramesPerSecond = true; // 显示帧数 fps
-});
 
+  viewer.zoomTo(viewer.entities);
+});
 </script>
 
 <style scoped></style>

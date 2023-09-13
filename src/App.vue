@@ -7,19 +7,9 @@ import * as Cesium from "cesium";
 import { onMounted } from "vue";
 
 onMounted(() => {
-  const viewer = new Cesium.Viewer("cesiumContainer");
-  var redBox = viewer.entities.add({
-    name: "Red box with black outline",
-    position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 300000.0),
-    box: {
-      dimensions: new Cesium.Cartesian3(200000.0, 300000.0, 500000.0), // x  y  z
-      material: Cesium.Color.RED.withAlpha(0.2),
-      outline: true,
-      outlineColor: Cesium.Color.BLACK,
-    },
-  });
+  Cesium.Ion.defaultAccessToken =import.meta.env.VITE_APP_ION_KEY
 
-  viewer.zoomTo(viewer.entities);
+  const widget = new Cesium.CesiumWidget("cesiumContainer");
 });
 </script>
 

@@ -11,24 +11,30 @@ onMounted(() => {
 
   const viewer = new Cesium.Viewer("cesiumContainer", {});
 
-  const position = Cesium.Cartesian3.fromDegrees(110, 20, 20000);
-
-  // viewer.camera.flyTo({
-  //   destination: position,
-  //   duration: 2,
-  //   orientation: {
-  //     heading: Cesium.Math.toRadians(0),
-  //     pitch: Cesium.Math.toRadians(0),
-  //     roll: Cesium.Math.toRadians(0),
+  // entity
+  // const point = new Cesium.Entity({
+  //   position: Cesium.Cartesian3.fromDegrees(120, 30,2000),
+  //   point: {
+  //     pixelSize: 20, // 像素点大小
+  //     color: Cesium.Color.BLUE
   //   },
   // });
+  // viewer.entities.add(point)
 
-  const position2 = Cesium.Cartesian3.fromDegrees(110, 20);
-  viewer.camera.lookAt(
-    position2,
-    new Cesium.HeadingPitchRange(Cesium.Math.toRadians(0), Cesium.Math.toRadians(-90), 20000)
-  );
+
+  const point = viewer.entities.add({
+    id: "point",
+    position: Cesium.Cartesian3.fromDegrees(120,30, 2000),
+    point: {
+      pixelSize: 20,
+      color: Cesium.Color.BLUE,
+    },
+  });
+
+  viewer.zoomTo(point)
+
 });
+
 </script>
 
 <style scoped></style>

@@ -11,30 +11,32 @@ onMounted(() => {
 
   const viewer = new Cesium.Viewer("cesiumContainer", {});
 
-  const point = viewer.entities.add({
-    id: "point",
-    position: Cesium.Cartesian3.fromDegrees(120, 30, 2000),
-    point: {
-      pixelSize: 20,
-      color: Cesium.Color.BLUE,
+  // 线
+  const polyline = viewer.entities.add({
+    polyline: {
+      //  返回笛卡尔坐标数组
+      positions: Cesium.Cartesian3.fromDegreesArray([120, 20, 121, 20, 121, 21]),
+      width: 10,
+      material: Cesium.Color.RED,
     },
   });
 
-  const billboard = viewer.entities.add({
-    position: Cesium.Cartesian3.fromDegrees(116, 40, 10),
-    // billboard: {
-    //   image: "/src/assets/0760.png_300.png",
-    //   scale: 0.2,
-    //   color: Cesium.Color.RED,
-    // },
-    label: {
-      text: "label",
-      showBackground:true,
-      backgroundColor: new Cesium.Color(255, 255, 0),
+  // 多边形
+  const polygon = viewer.entities.add({
+    polygon: {
+      hierarchy: {
+        positions: Cesium.Cartesian3.fromDegreesArray([120, 25, 121, 25, 121, 25.5, 120, 25.5]),
+      },
+      material: Cesium.Color.RED,
+      height: 0,
+      extrudedHeight: 50000,
+      outline: true,
+      outlineColor: Cesium.Color.BLUE,
+      fill:false
     },
   });
 
-  viewer.zoomTo(billboard);
+  viewer.zoomTo(polygon);
 });
 </script>
 

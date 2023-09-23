@@ -32,11 +32,20 @@ onMounted(() => {
       extrudedHeight: 50000,
       outline: true,
       outlineColor: Cesium.Color.BLUE,
-      fill:false
+      fill: false,
     },
   });
 
-  viewer.zoomTo(polygon);
+  const box = viewer.entities.add({
+    position: Cesium.Cartesian3.fromDegrees(119, 30, 2000),
+    box: {
+      dimensions: new Cesium.Cartesian3(2000, 1000, 3000),
+      material: Cesium.Color.PINK,
+
+    },
+  });
+
+  viewer.zoomTo(box);
 });
 </script>
 

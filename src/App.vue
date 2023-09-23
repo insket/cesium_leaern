@@ -36,16 +36,28 @@ onMounted(() => {
     },
   });
 
+  // 盒子
   const box = viewer.entities.add({
     position: Cesium.Cartesian3.fromDegrees(119, 30, 2000),
     box: {
       dimensions: new Cesium.Cartesian3(2000, 1000, 3000),
       material: Cesium.Color.PINK,
+    },
+  });
+
+  // 椭圆
+  const ellipse = viewer.entities.add({
+    position: Cesium.Cartesian3.fromDegrees(118, 30, 2000),
+    ellipse: {
+      semiMajorAxis: 200,
+      semiMinorAxis: 100,
+      material: Cesium.Color.VIOLET,
+      rotation: Math.PI / 4
 
     },
   });
 
-  viewer.zoomTo(box);
+  viewer.zoomTo(ellipse);
 });
 </script>
 

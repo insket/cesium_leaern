@@ -52,12 +52,20 @@ onMounted(() => {
       semiMajorAxis: 200,
       semiMinorAxis: 100,
       material: Cesium.Color.VIOLET,
-      rotation: Math.PI / 4
-
+      rotation: Math.PI / 4,
     },
   });
 
-  viewer.zoomTo(ellipse);
+  // 矩形
+  const rectangle = viewer.entities.add({
+    rectangle: {
+      coordinates: Cesium.Rectangle.fromDegrees(120,40,123,45),
+      extrudedHeight:200000,
+      material: "/src/assets/0760.png_300.png"
+    },
+  });
+
+  viewer.zoomTo(rectangle);
 });
 </script>
 

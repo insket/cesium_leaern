@@ -1,38 +1,68 @@
 <template>
   <div id="cesiumContainer"></div>
+  <button class="remove" @click="remove">remove</button>
 </template>
 
 <script setup>
 import * as Cesium from "cesium";
 import { onMounted, version } from "vue";
 
+let viewer;
+let point;
+let point2;
+
+let pointArr = [];
+
 onMounted(() => {
   Cesium.Ion.defaultAccessToken = import.meta.env.VITE_APP_ION_KEY;
 
-  const viewer = new Cesium.Viewer("cesiumContainer", {});
+  viewer = new Cesium.Viewer("cesiumContainer", {});
 
-  const billoboard = viewer.entities.add({
-    position: Cesium.Cartesian3.fromDegrees(120, 30, 100),
-    billboard: {
-      image: "/src/assets/touno.png",
-      scale: 0.9,
-      color: Cesium.Color.WHITE,
-      transparent: true,
-    },
-    polyline: {
-      positions: Cesium.Cartesian3.fromDegreesArrayHeights([120, 30, 0, 120, 30, 100]),
-      material: Cesium.Color.AQUA,
-    },
-    position: Cesium.Cartesian3.fromDegrees(120, 30, 100),
-    label: {
-      text: "xxx小区",
-      fillColor: Cesium.Color.AZURE,
-      pixelOffset: new Cesium.Cartesian2(0, -60),
+  point = viewer.entities.add({
+    id: "point",
+    position: Cesium.Cartesian3.fromDegrees(121, 30),
+    point: {
+      color: Cesium.Color.RED,
+      pixelSize: 20,
     },
   });
+  pointArr.push(point);
+  point2 = viewer.entities.add({
+    id: "point2",
+    position: Cesium.Cartesian3.fromDegrees(121.0001, 30),
+    point: {
+      color: Cesium.Color.BLUE,
+      pixelSize: 20,
+    },
+  });
+  pointArr.push(point2);
 
-  viewer.zoomTo(billoboard);
+  viewer.zoomTo(point);
 });
+
+const remove = () => {
+  // viewer.entities.remove(point);
+
+  // 删除所有
+  // viewer.entities.removeAll()
+
+  // 根据id删
+  // viewer.entities.removeById("point")
+
+  // 拿到id再删
+  // const point = viewer.entities.getById("point")
+  // viewer.entities.remove(point)
+
+  pointArr.forEach((item) => viewer.entities.remove(item));
+  pointArr = [];
+};
 </script>
 
-<style scoped></style>
+<style scoped>
+.remove {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  z-index: 99;
+}
+</style>

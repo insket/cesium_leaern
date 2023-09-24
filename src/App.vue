@@ -1,6 +1,5 @@
 <template>
   <div id="cesiumContainer"></div>
-  <button class="remove" @click="remove">remove</button>
 </template>
 
 <script setup>
@@ -8,54 +7,35 @@ import * as Cesium from "cesium";
 import { onMounted, version } from "vue";
 
 let viewer;
-let point;
-let point2;
-
-let pointArr = [];
+let lon,
+  lat,
+  num = 0;
 
 onMounted(() => {
   Cesium.Ion.defaultAccessToken = import.meta.env.VITE_APP_ION_KEY;
 
   viewer = new Cesium.Viewer("cesiumContainer", {});
 
-  point = viewer.entities.add({
-    id: "point",
-    position: Cesium.Cartesian3.fromDegrees(121, 30),
-    point: {
-      color: Cesium.Color.RED,
-      pixelSize: 20,
+  // 动态line
+  const line = viewer.entities.add({
+    polyline: {
+      positions: new Cesium.CallbackProperty(() => {
+        num += 0.005;
+        lon = 120 + num;
+        lat = 30 + num;
+        if (lon < 121) {
+          return Cesium.Cartesian3.fromDegreesArray([120, 30, lon, lat]);
+        } else {
+          line.polyline.positions = Cesium.Cartesian3.fromDegreesArray([120, 30, 121, 31]);
+        }
+      }, false),
+      width: 5,
+      material: Cesium.Color.RED,
     },
   });
-  pointArr.push(point);
-  point2 = viewer.entities.add({
-    id: "point2",
-    position: Cesium.Cartesian3.fromDegrees(121.0001, 30),
-    point: {
-      color: Cesium.Color.BLUE,
-      pixelSize: 20,
-    },
-  });
-  pointArr.push(point2);
 
-  viewer.zoomTo(point);
+  viewer.zoomTo(line);
 });
-
-const remove = () => {
-  // viewer.entities.remove(point);
-
-  // 删除所有
-  // viewer.entities.removeAll()
-
-  // 根据id删
-  // viewer.entities.removeById("point")
-
-  // 拿到id再删
-  // const point = viewer.entities.getById("point")
-  // viewer.entities.remove(point)
-
-  pointArr.forEach((item) => viewer.entities.remove(item));
-  pointArr = [];
-};
 </script>
 
 <style scoped>
